@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Navbar,
   NavBody,
@@ -94,7 +95,11 @@ const Landing: React.FC = () => {
                   <NavbarLogo />
                   <NavItems items={navItems} />
                   <div className="flex items-center gap-4">
-                    <NavbarButton variant="secondary" href="/login">Login</NavbarButton>
+                    <Link to="/login">
+                      <NavbarButton variant="secondary">
+                        Login
+                      </NavbarButton>
+                    </Link>
                   </div>
                 </NavBody>
        
@@ -123,14 +128,15 @@ const Landing: React.FC = () => {
                       </a>
                     ))}
                     <div className="flex w-full flex-col gap-4">
-                      <NavbarButton
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        variant="primary"
-                        className="w-full"
-                        href="/login"
-                      >
-                        Login
-                      </NavbarButton>
+                      <Link to="/login">
+                        <NavbarButton
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          variant="primary"
+                          className="w-full"
+                        >
+                          Login
+                        </NavbarButton>
+                      </Link>
                     </div>
                   </MobileNavMenu>
                 </MobileNav>
