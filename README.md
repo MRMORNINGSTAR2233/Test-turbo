@@ -1,4 +1,4 @@
-# Unlodin Frontend
+# Searchfy.ai Frontend
 
 A modern React frontend application built with TypeScript, Vite, and TailwindCSS.
 
