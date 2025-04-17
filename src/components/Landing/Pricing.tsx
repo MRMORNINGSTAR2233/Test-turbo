@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import anime from 'animejs';
 import { motion } from 'framer-motion';
 import { Check, X, Sparkles, ArrowRight, ShieldCheck, Zap, Clock, Star, Users, BookOpen, GraduationCap, Building } from 'lucide-react';
-
+import FAQ from './FAQ';
 // Define plan type with optional properties
 interface PlanType {
   title: string;
@@ -397,29 +397,56 @@ const Pricing: React.FC = () => {
           </div>
           
           {/* Features comparison table */}
-          <div className="pricing-table opacity-0 overflow-x-auto mt-16">
+          <div className="pricing-table opacity-0 mt-16">
             <div className="bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-800/50">
               <h3 className="text-2xl font-bold text-white mb-8">Features Comparison</h3>
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-800 text-left">
-                    <th className="py-4 px-4 text-gray-400 font-medium">Feature</th>
-                    <th className="py-4 px-4 text-gray-400 font-medium">Free</th>
-                    <th className="py-4 px-4 text-gray-400 font-medium">Pro</th>
-                    <th className="py-4 px-4 text-gray-400 font-medium">Business</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {featuresCompare.map((feature, index) => (
-                    <tr key={index} className={`border-b border-gray-800/50 ${index % 2 === 0 ? 'bg-gray-900/20' : ''}`}>
-                      <td className="py-4 px-4 text-white">{feature.name}</td>
-                      <td className="py-4 px-4 text-gray-300">{feature.free}</td>
-                      <td className="py-4 px-4 text-gray-300">{feature.pro}</td>
-                      <td className="py-4 px-4 text-gray-300">{feature.business}</td>
+              
+              {/* Mobile view - stacked cards for small screens */}
+              <div className="block md:hidden space-y-6">
+                {featuresCompare.map((feature, index) => (
+                  <div key={index} className="bg-gray-800/30 rounded-lg p-4">
+                    <h4 className="font-medium text-white mb-3">{feature.name}</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="flex flex-col items-center bg-gray-900/50 rounded-lg p-2">
+                        <span className="text-xs text-gray-400 mb-1">Free</span>
+                        <div className="text-center">{feature.free}</div>
+                      </div>
+                      <div className="flex flex-col items-center bg-indigo-900/20 rounded-lg p-2">
+                        <span className="text-xs text-gray-400 mb-1">Pro</span>
+                        <div className="text-center">{feature.pro}</div>
+                      </div>
+                      <div className="flex flex-col items-center bg-gray-900/50 rounded-lg p-2">
+                        <span className="text-xs text-gray-400 mb-1">Business</span>
+                        <div className="text-center">{feature.business}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Desktop view - table for larger screens */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-800 text-left">
+                      <th className="py-4 px-4 text-gray-400 font-medium">Feature</th>
+                      <th className="py-4 px-4 text-gray-400 font-medium">Free</th>
+                      <th className="py-4 px-4 text-gray-400 font-medium">Pro</th>
+                      <th className="py-4 px-4 text-gray-400 font-medium">Business</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {featuresCompare.map((feature, index) => (
+                      <tr key={index} className={`border-b border-gray-800/50 ${index % 2 === 0 ? 'bg-gray-900/20' : ''}`}>
+                        <td className="py-4 px-4 text-white">{feature.name}</td>
+                        <td className="py-4 px-4 text-gray-300">{feature.free}</td>
+                        <td className="py-4 px-4 text-gray-300">{feature.pro}</td>
+                        <td className="py-4 px-4 text-gray-300">{feature.business}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -455,6 +482,16 @@ const Pricing: React.FC = () => {
           </div>
         </div>
       </div>
+      <motion.section 
+                  id="faq"
+                  className="relative z-10"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <FAQ />
+                </motion.section>
     </section>
   );
 };

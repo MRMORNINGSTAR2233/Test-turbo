@@ -15,7 +15,9 @@ import Hero from './Hero';
 import Features from './Features';
 import About from './About';
 import Pricing from './Pricing';
-import Contact from './Contact';
+import Testimonials from './Testimonials';
+import LogoMarquee from './LogoMarquee';
+import SparklesBackground from './Sparkles';
 import Footer from './Footer';
 import EntranceAnimation from './EntranceAnimation';
 import ChatBot from '../ChatBot';
@@ -33,6 +35,14 @@ const Landing: React.FC = () => {
     {
       name: "Pricing",
       link: "#pricing",
+    },
+    {
+      name: "Testimonials",
+      link: "#testimonials",
+    },
+    {
+      name: "FAQ",
+      link: "#faq",
     },
     {
       name: "Contact",
@@ -68,8 +78,13 @@ const Landing: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {/* Consistent background applied to entire content area */}
-            <div className="fixed inset-0 bg-gradient-to-b from-gray-950 to-gray-900 min-h-screen w-full -z-10"></div>
+            {/* Background layers */}
+            <div className="fixed inset-0 bg-gradient-to-b from-gray-950 to-gray-900 min-h-screen w-full -z-20"></div>
+            
+            {/* Enhanced sparkles background effect */}
+            <div className="fixed inset-0 -z-60 opacity-70 pointer-events-none">
+              <SparklesBackground />
+            </div>
             
             {/* Navbar - fixed position */}
             <div className="sticky top-0 w-full z-50">
@@ -79,7 +94,7 @@ const Landing: React.FC = () => {
                   <NavbarLogo />
                   <NavItems items={navItems} />
                   <div className="flex items-center gap-4">
-                    <NavbarButton variant="secondary">Login</NavbarButton>
+                    <NavbarButton variant="secondary"><a href="/login">Login</a></NavbarButton>
                   </div>
                 </NavBody>
        
@@ -113,7 +128,7 @@ const Landing: React.FC = () => {
                         variant="primary"
                         className="w-full"
                       >
-                        Login
+                        <a href="/login">Login</a>
                       </NavbarButton>
                     </div>
                   </MobileNavMenu>
@@ -124,15 +139,28 @@ const Landing: React.FC = () => {
             {/* Content sections */}
             {contentLoaded && (
               <div className="relative z-10">
+                {/* Hero section with higher z-index for dramatic impact */}
                 <motion.section 
                   id="hero"
-                  className="relative z-10"
+                  className="relative z-20"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <Hero />
                 </motion.section>
+                
+                {/* Logo marquee with proper z-index */}
+                <motion.section
+                  className="relative z-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <LogoMarquee />
+                </motion.section>
+                
+                {/* Other sections with standard z-index */}
                 <motion.section 
                   id="about"
                   className="relative z-10"
@@ -159,6 +187,16 @@ const Landing: React.FC = () => {
                   </div>
                 </motion.section>
                 <motion.section 
+                  id="testimonials"
+                  className="relative z-10"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Testimonials />
+                </motion.section>
+                <motion.section 
                   id="pricing"
                   className="relative z-10"
                   initial={{ opacity: 0, y: 50 }}
@@ -168,16 +206,7 @@ const Landing: React.FC = () => {
                 >
                   <Pricing />
                 </motion.section>
-                <motion.section 
-                  id="contact"
-                  className="relative z-10"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Contact />
-                </motion.section>
+                
                 <div className="relative z-10">
                   <Footer />
                 </div>
