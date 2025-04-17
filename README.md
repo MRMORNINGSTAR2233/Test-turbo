@@ -1,4 +1,4 @@
-# Searchfy.ai Frontend
+# Searchify.ai Frontend
 
 A modern React frontend application built with TypeScript, Vite, and TailwindCSS.
 
