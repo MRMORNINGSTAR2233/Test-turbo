@@ -94,7 +94,7 @@ const Landing: React.FC = () => {
                   <NavbarLogo />
                   <NavItems items={navItems} />
                   <div className="flex items-center gap-4">
-                    <NavbarButton variant="secondary"><a href="/login">Login</a></NavbarButton>
+                    <NavbarButton variant="secondary" href="/login">Login</NavbarButton>
                   </div>
                 </NavBody>
        
@@ -127,8 +127,9 @@ const Landing: React.FC = () => {
                         onClick={() => setIsMobileMenuOpen(false)}
                         variant="primary"
                         className="w-full"
+                        href="/login"
                       >
-                        <a href="/login">Login</a>
+                        Login
                       </NavbarButton>
                     </div>
                   </MobileNavMenu>
