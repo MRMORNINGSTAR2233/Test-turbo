@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Mail, Lock, Eye, EyeOff, ArrowRight, Home, AlertCircle } from 'lucide-react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import anime from 'animejs';
 
@@ -15,6 +15,7 @@ const Login: React.FC = () => {
   const particlesRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -180,10 +181,10 @@ const Login: React.FC = () => {
         easing: 'easeInOutQuad'
       });
       
+      // The login from AuthContext handles navigation
       await login(email, password);
-    } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to login. Please check your credentials.');
-      
+    } catch (err) {
+      setError('Login failed. Please try again.');
       // Shake animation for error
       if (formRef.current) {
         anime({
@@ -198,9 +199,16 @@ const Login: React.FC = () => {
     }
   };
 
+  // If already authenticated, redirect to chat
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/chat');
+    }
+  }, [isAuthenticated, navigate]);
+
   // Redirect if already authenticated
-  if (isAuthenticated && !isLoading) {
-    return <Navigate to="/dashboard" replace />;
+  if (isAuthenticated) {
+    return <Navigate to="/chat" replace />;
   }
 
   return (

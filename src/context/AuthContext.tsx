@@ -7,7 +7,6 @@ interface User {
   name: string;
   email: string;
   username: string;
-  account_type: 'shipper' | 'carrier';
 }
 
 interface AuthContextType {
@@ -66,7 +65,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const success = await fetchUserProfile();
       
       if (success) {
-        navigate('/orders');
+        navigate('/chat');
       } else {
         throw new Error('Failed to get user profile after login');
       }

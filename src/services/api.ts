@@ -10,7 +10,7 @@ const getBaseUrl = () => {
   }
   
   // In production with Docker, the backend and frontend will be on the same host
-  // But frontend is on port 3000 and backend is on port 8000
+  // But frontend is on port 3000 and backend is on port 8001
   // So construct the URL dynamically
   return `${window.location.protocol}//${window.location.hostname}:8000${apiPath}`;
 };
@@ -44,6 +44,7 @@ export const authAPI = {
     formData.append('username', username);
     formData.append('password', password);
     
+    // Use the absolute URL through axios instance
     const response = await api.post('/auth/login', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -62,7 +63,6 @@ export const authAPI = {
     username: string;
     password: string;
     name: string;
-    account_type: 'shipper' | 'carrier';
   }) => {
     const response = await api.post('/auth/signup', userData);
     return response.data;
@@ -78,13 +78,24 @@ export const authAPI = {
     return localStorage.getItem('accessToken') !== null;
   },
   
-  // Get current user profile - this would be implemented in the backend
+  // Get current user profile
   getUserProfile: async () => {
     try {
       const response = await api.get('/users/me');
       return response.data;
     } catch (error) {
       console.error('Failed to get user profile:', error);
+      return null;
+    }
+  },
+  
+  // Verify authentication
+  verify: async () => {
+    try {
+      const response = await api.get('/auth/verify');
+      return response.data;
+    } catch (error) {
+      console.error('Authentication verification failed:', error);
       return null;
     }
   }
